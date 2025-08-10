@@ -2,6 +2,8 @@
 
 <div align=center><img src="./img/Screenshot.png"></div>
 
+[![.NET Desktop App Release](https://github.com/RoyZ-iwnl/EndfieldProxyLauncher/actions/workflows/release.yml/badge.svg)](https://github.com/RoyZ-iwnl/EndfieldProxyLauncher/actions/workflows/release.yml)
+
 这是一个为某款工厂建造类游戏设计的第三方网络代理工具。它允许用户启动一个本地代理服务器，拦截特定的游戏网络请求，并将其重定向到用户指定的本地服务器地址。本工具主要面向开发者、研究人员或需要进行本地测试的用户。
 
 This is a third-party network proxy tool designed for a certain factory-building game. It allows users to start a local proxy server to intercept specific game network requests and redirect them to a user-specified local server address. This tool is primarily intended for developers, researchers, or users who need to perform local testing.
