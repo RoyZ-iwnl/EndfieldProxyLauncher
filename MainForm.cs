@@ -453,7 +453,7 @@ namespace ProxyLauncher
                 if (btnStop != null) btnStop.Enabled = true;
                 if (lblStatus != null)
                 {
-                    lblStatus.Text = LanguageManager.GetText("RunningStatus") + config.proxyPort + " (Titanium " + LanguageManager.GetText("Mode") + ")";
+                    lblStatus.Text = LanguageManager.GetText("RunningStatus") + config.proxyPort;
                     lblStatus.ForeColor = Color.Green;
                 }
             }
