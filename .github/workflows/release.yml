@@ -24,7 +24,7 @@ jobs:
 
     - name: Create ZIP package
       run: |
-        cd ./EndfieldProxyLauncher/bin/Release/net8.0-windows/
+        cd ./bin/Release/net8.0-windows/
         powershell Compress-Archive -Path * -DestinationPath ${{ github.workspace }}/EndfieldProxyLauncher-release.zip
 
     - name: Create GitHub Release
