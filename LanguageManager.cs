@@ -172,7 +172,7 @@ namespace ProxyLauncher
             {
                 {"AppTitle", "Endfield Proxy Launcher"},
                 {"ConfigInfo", "Configuration Info"},
-                {"EditConfig", "Edit Config"},
+                {"EditConfig", "Edit"},
                 {"TargetProgram", "Target Program"},
                 {"ProgramPath", "Program Path:"},
                 {"ControlPanel", "Control Panel"},

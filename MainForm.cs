@@ -367,6 +367,18 @@ namespace ProxyLauncher
                     config = ConfigManager.LoadConfig();
                     // 同时更新全局静态配置，确保数据源统一
                     Program.Config = config;
+
+                    // 重置代理对象，确保下次启动使用新配置
+                    if (_proxy != null)
+                    {
+                        // 如果代理正在运行，先停止它
+                        if (_proxy.GetProxyServer().ProxyRunning)
+                        {
+                            StopAll();
+                        }
+                        _proxy = null; // 重置代理对象
+                    }
+
                     UpdateConfigDisplay();
                     MessageBox.Show(
                         LanguageManager.GetText("ConfigReloaded"),
