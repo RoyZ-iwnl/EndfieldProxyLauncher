@@ -1,5 +1,7 @@
 # Endfield Proxy Launcher
 
+<div align=center><img src="./img/Screenshot.png"></div>
+
 这是一个为某款工厂建造类游戏设计的第三方网络代理工具。它允许用户启动一个本地代理服务器，拦截特定的游戏网络请求，并将其重定向到用户指定的本地服务器地址。本工具主要面向开发者、研究人员或需要进行本地测试的用户。
 
 This is a third-party network proxy tool designed for a certain factory-building game. It allows users to start a local proxy server to intercept specific game network requests and redirect them to a user-specified local server address. This tool is primarily intended for developers, researchers, or users who need to perform local testing.
@@ -18,7 +20,6 @@ This is a third-party network proxy tool designed for a certain factory-building
 - **高度可配置**: 通过 `config.json` 文件，用户可以自定义代理端口、重定向目标地址和需要监控的域名。
 - **实时日志**: 提供一个日志窗口，实时显示代理活动、请求拦截和重定向信息。
 - **多语言支持**: 内置中文和英文界面，并支持扩展。
-- **管理员权限自检**: 自动检测并提示以管理员身份运行，确保代理功能正常。
 
 ### 📋 使用前提
 
@@ -118,7 +119,6 @@ This is a third-party network proxy tool designed for a certain factory-building
 -   **Highly Configurable**: Users can customize the proxy port, redirection target, and monitored domains via a `config.json` file.
 -   **Real-time Logging**: A log window displays real-time proxy activity, request interceptions, and redirection information.
 -   **Multi-language Support**: Built-in support for Chinese and English, with the ability to add more languages.
--   **Admin Privilege Self-Check**: Automatically detects if admin rights are needed and prompts the user to elevate.
 
 ### 📋 Prerequisites
 

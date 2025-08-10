@@ -7,7 +7,6 @@ namespace ProxyLauncher
         public int proxyPort { get; set; } = 8899;
         public string redirectHost { get; set; } = "127.0.0.1";
         public int redirectPort { get; set; } = 5000;
-        public bool ignoreNonTarget { get; set; } = true;
 
         // 确保targetDomains有默认值，防止null引用
         public List<string> targetDomains { get; set; } = new List<string>
@@ -126,7 +125,6 @@ namespace ProxyLauncher
                 proxyPort = 8899,
                 redirectHost = "127.0.0.1", 
                 redirectPort = 5000,
-                ignoreNonTarget = true,
                 targetDomains = new List<string>
                 {
                     "gryphline.com",

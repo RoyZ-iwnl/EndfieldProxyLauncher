@@ -316,8 +316,7 @@ namespace ProxyLauncher
             var uniqueDomains = config.targetDomains?.Distinct().ToList() ?? new System.Collections.Generic.List<string>();
             string configText = $"{LanguageManager.GetText("RedirectTarget")}: {config.redirectHost}:{config.redirectPort} | " +
                                 $"{LanguageManager.GetText("ProxyPort")}: {config.proxyPort} | " +
-                                $"{LanguageManager.GetText("MonitoredDomains")}: {string.Join(", ", uniqueDomains)} | " +
-                                $"{LanguageManager.GetText("IgnoreNonTarget")}: {config.ignoreNonTarget}";
+                                $"{LanguageManager.GetText("MonitoredDomains")}: {string.Join(", ", uniqueDomains)} | " ;
             if (lblConfigInfo != null)
             {
                 // 初始化时加载默认文本
@@ -414,13 +413,25 @@ namespace ProxyLauncher
 
             try
             {
-                if (progressBar != null) { progressBar.Visible = true; progressBar.Value = 20; }
+                if (progressBar != null) { progressBar.Visible = true; progressBar.Value = 10; }
+
+                // 在启动代理前进行证书检测与安装
+                if (_proxy == null)
+                    _proxy = new TitaniumProxy(this.config);
+
+                // 证书检测（重要）
+                if (!CertificateHelper.EnsureTrustedRootCertificate(_proxy.GetProxyServer()))
+                {
+                    // 未安装或用户拒绝，则中止启动
+                    if (progressBar != null) progressBar.Visible = false;
+                    return;
+                }
+
+                if (progressBar != null) progressBar.Value = 20;
                 LogManager.WriteLine(LanguageManager.GetText("StartingProxyService"));
 
                 // 步骤 1: 启动 Titanium 代理
-                _proxy = new TitaniumProxy(this.config);
                 await Task.Run(() => _proxy.Start());
-
                 if (progressBar != null) progressBar.Value = 60;
                 LogManager.WriteLine(LanguageManager.GetText("ProxyServiceStarted") + config.proxyPort);
 
@@ -467,6 +478,7 @@ namespace ProxyLauncher
                 if (progressBar != null) progressBar.Visible = false;
             }
         }
+
 
         private void BtnStop_Click(object? sender, EventArgs e)
         {

@@ -124,7 +124,6 @@ namespace ProxyLauncher
                 {"RedirectTarget", "重定向目标"},
                 {"ProxyPort", "代理端口"},
                 {"MonitoredDomains", "监控域名"},
-                {"IgnoreNonTarget", "忽略非目标"},
                 {"ModifyConfigPrompt", "请在修改并保存配置文件后，点击'是'重新加载配置。\n点击'否'将取消本次加载。"},
                 {"ConfigReloaded", "配置已成功重新加载！"},
                 {"OpenConfigFailed", "打开配置文件失败："},
@@ -159,7 +158,11 @@ namespace ProxyLauncher
                 {"ProcessStartFailedNull", "启动进程失败，返回的 process 对象为空。"},
                 {"ProcessStartCriticalError", "启动进程时发生严重错误: "},
                 {"LogSavedTo", "日志已保存到: "},
-                {"SaveLogFailed", "保存日志失败: "}
+                {"SaveLogFailed", "保存日志失败: "},
+                {"CertNotInstalledPrompt", "未检测到受信任的拦截根证书，是否现在安装？\n需要管理员权限，安装到“受信任的根证书颁发机构”和“个人”存储。"},
+                {"CertInstallFailed", "根证书安装失败或未生效，请以管理员身份运行并重试。"},
+                {"CertInstallException", "证书安装过程发生异常："},
+                {"CertCreateOrLoadFailed", "无法创建或加载代理根证书。"}
             };
         }
 
@@ -195,7 +198,6 @@ namespace ProxyLauncher
                 {"RedirectTarget", "Redirect Target"},
                 {"ProxyPort", "Proxy Port"},
                 {"MonitoredDomains", "Monitored Domains"},
-                {"IgnoreNonTarget", "Ignore Non-Target"},
                 {"ModifyConfigPrompt", "Please modify and save the config file, then click 'Yes' to reload.\nClick 'No' to cancel this operation."},
                 {"ConfigReloaded", "Configuration reloaded successfully!"},
                 {"OpenConfigFailed", "Failed to open config file: "},
@@ -230,7 +232,11 @@ namespace ProxyLauncher
                 {"ProcessStartFailedNull", "Process start failed, returned null object."},
                 {"ProcessStartCriticalError", "Critical error starting process: "},
                 {"LogSavedTo", "Log saved to: "},
-                {"SaveLogFailed", "Failed to save log: "}
+                {"SaveLogFailed", "Failed to save log: "},
+                {"CertNotInstalledPrompt", "No trusted interception root certificate detected. Install now?\nRequires admin rights to install in 'Trusted Root Certification Authorities' and 'Personal' stores."},
+                {"CertInstallFailed", "Root certificate installation failed or not effective. Please run as administrator and retry."},
+                {"CertInstallException", "An exception occurred during certificate installation: "},
+                {"CertCreateOrLoadFailed", "Failed to create or load proxy root certificate."}
             };
         }
     }
