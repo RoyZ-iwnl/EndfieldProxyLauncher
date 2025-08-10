@@ -9,36 +9,45 @@ jobs:
     runs-on: windows-latest
     permissions:
       contents: write
+
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Restore dependencies
-      run: dotnet restore EndfieldProxyLauncher.sln
+      - name: Restore dependencies
+        run: dotnet restore EndfieldProxyLauncher.sln
 
-    - name: Build project
-      run: dotnet build EndfieldProxyLauncher.sln --configuration Release --no-restore
+      - name: Build project
+        run: dotnet build EndfieldProxyLauncher.sln --configuration Release --no-restore
 
-    - name: Create ZIP package
-      run: |
-        cd ./bin/Release/net8.0-windows/
-        powershell Compress-Archive -Path * -DestinationPath ${{ github.workspace }}/EndfieldProxyLauncher-release.zip
+      - name: Create ZIP package
+        run: |
+          cd ./bin/Release/net8.0-windows/
+          powershell Compress-Archive -Path * -DestinationPath ${{ github.workspace }}/EndfieldProxyLauncher-release.zip
+      
 
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v2
-      if: success()
-      with:
-        name: Release ${{ env.RELEASE_VERSION }}
-        tag_name: Release-${{ env.RELEASE_VERSION }}
-        body: |
-          自动构建的发布版本。
-          由 commit ${{ github.sha }} 触发。
-        files: EndfieldProxyLauncher-release.zip
-      env:
-        RELEASE_VERSION: "$(((Get-Date).ToUniversalTime().AddHours(8)).ToString('yyyy.MM.dd.HHmm')) UTC+8"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set Release Version
+        id: set_version
+        run: echo "RELEASE_VERSION=$(((Get-Date).ToUniversalTime().AddHours(8)).ToString('yyyy.MM.dd.HHmm'))" >> $env:GITHUB_ENV
+        shell: pwsh
+
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: success()
+        with:
+
+          name: Release ${{ env.RELEASE_VERSION }}
+          tag_name: Release-${{ env.RELEASE_VERSION }}
+          body: |
+            自动构建的发布版本。
+            由 commit ${{ github.sha }} 触发。
+          files: EndfieldProxyLauncher-release.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
