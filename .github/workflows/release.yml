@@ -1,0 +1,53 @@
+name: .NET Desktop App Release
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-release:
+
+    runs-on: windows-latest
+
+    steps:
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+
+      - name: Restore dependencies
+        run: dotnet restore EndfieldProxyLauncher.sln
+
+
+      - name: Build project
+        run: dotnet build EndfieldProxyLauncher.sln --configuration Release --no-restore
+
+
+      - name: Create ZIP package
+        run: powershell Compress-Archive -Path EndfieldProxyLauncher/bin/Release/net8.0-windows/* -DestinationPath EndfieldProxyLauncher-release.zip
+        
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: success() 
+        with:
+
+          name: Release ${{ env.RELEASE_VERSION }}
+          tag_name: Release-${{ env.RELEASE_VERSION }}
+
+          body: |
+            自动构建的发布版本。
+            由 commit ${{ github.sha }} 触发。
+
+          files: EndfieldProxyLauncher-release.zip
+        env:
+
+          RELEASE_VERSION: $(Get-Date -Format 'yyyy.MM.dd.HHmm')
+
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

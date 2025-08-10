@@ -71,8 +71,7 @@ namespace ProxyLauncher
             LogManager.WriteLine(LanguageManager.GetText("TitaniumProxyStopped"));
         }
 
-        // 直接使用 async Task 而不是 Task.Run 包装
-        private async Task OnRequest(object sender, SessionEventArgs e)
+        private Task OnRequest(object sender, SessionEventArgs e)
         {
             string originalUrl = e.HttpClient.Request.Url;
             string originalHost = e.HttpClient.Request.RequestUri.Host;
@@ -82,7 +81,7 @@ namespace ProxyLauncher
             {
                 LogManager.WriteLine(LanguageManager.GetText("InterceptBlacklistUrl") + originalUrl);
                 e.TerminateSession();
-                return;
+                return Task.CompletedTask;
             }
 
             // 2. 检查请求是否为目标请求 (URL包含"meta" 或 host是目标域名)
@@ -94,7 +93,7 @@ namespace ProxyLauncher
                 // 对于目标请求，首先放行CONNECT方法，让HTTPS隧道建立
                 if (e.HttpClient.Request.Method.Equals("CONNECT", StringComparison.OrdinalIgnoreCase))
                 {
-                    return;
+                    return Task.CompletedTask;
                 }
 
                 LogManager.WriteLine(LanguageManager.GetText("CapturedTargetRequest") + originalUrl);
@@ -131,15 +130,14 @@ namespace ProxyLauncher
                 // 更新Host头以匹配新的目标
                 e.HttpClient.Request.Headers.RemoveHeader("Host");
                 e.HttpClient.Request.Headers.AddHeader("Host", $"{_config.redirectHost}:{_config.redirectPort}");
-
                 LogManager.WriteLine(LanguageManager.GetText("RedirectedRequest") + e.HttpClient.Request.RequestUri);
-                return;
+
+                return Task.CompletedTask;
             }
 
             // 对于所有其他不相关的请求，我们不再拦截，而是直接放行。
-            // 只需要在这里简单地 return 即可，Titanium Proxy 会自动处理后续的转发。
             LogManager.WriteLine(LanguageManager.GetText("PassThroughNonTargetRequest") + originalUrl);
-            return;
+            return Task.CompletedTask;
         }
     }
 }
